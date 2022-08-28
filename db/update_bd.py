@@ -7,7 +7,7 @@ import yaml
 
 def read_wave_id():
     with open('./config.yaml', 'r') as file:
-        dict_ = yaml.load(file)
+        dict_ = yaml.load(file, yaml.FullLoader)
         wave_id = dict_['wave_id']
     return wave_id
 
@@ -21,7 +21,7 @@ def update_lamoda_prices():
     con = sqlite3.connect('./items.db')
     cur = con.cursor()
     cur.execute('SELECT * FROM main.items_lamoda')
-    items = list(map(lambda x: [x[0], x[1]], cur.fetchall()))
+    items = list(map(lambda x: [x[0], x[1]], cur.fetchall()))[:100]
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         get_available_sizes_and_price_ = {executor.submit(get_available_sizes_and_price, item): item for item in items}
         for future in concurrent.futures.as_completed(get_available_sizes_and_price_):

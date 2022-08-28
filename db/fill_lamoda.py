@@ -8,14 +8,14 @@ from functions_fill_db import fill_db_prices, fill_db_items
 import concurrent.futures
 
 
-con = sqlite3.connect('./items.db')
+con = sqlite3.connect('../items.db')
 cur = con.cursor()
 
 
 
-for i in range(1, 138):
+for i in range(1, 167):
     print(i)
-    url = f'https://www.lamoda.ru/c/2981/shoes-krossovk-kedy-muzhskie/?page={i}'
+    url = f'https://www.lamoda.ru/c/2968/shoes-krossovki-kedy/?page=167'
     soup = BeautifulSoup(requests.get(url).content, "html.parser")
     links = soup.find_all('a')
     for elem in links:

@@ -1,11 +1,8 @@
 import sqlite3
 
 
-
-
-
 def create_db_items():
-    con = sqlite3.connect('items.db')
+    con = sqlite3.connect('../items.db')
     cur = con.cursor()
     cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
     tables = cur.fetchall()
@@ -29,6 +26,7 @@ def create_db_items():
                     CREATE TABLE prices_ozon
                     (itemid integer, date_changes TIMESTAMP DEFAULT (datetime('now','localtime')),  price integer)
                                ''')
+
 
 
 

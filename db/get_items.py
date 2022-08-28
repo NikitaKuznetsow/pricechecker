@@ -21,20 +21,13 @@ WINDOW w as (partition by itemid
 ORDER BY itemid, wave_id, prev_price desc)
 
 SELECT l.itemid, l.name, t.prev_price, t.curr_price, t.prev_date, t.curr_date,
-       l.link, l.img, l.rating, l.review_count, po.price as ozon_price, io.link as ozon_link, t.wave_id
+       l.link, l.img, l.rating, l.review_count, t.wave_id
 FROM t
 left join items_lamoda l
 on t.itemid = l.itemid
-left join items_matching m
-on t.itemid = m.itemid_lamoda
-left join prices_ozon po
-on po.itemid = m.itemid_ozon
-left join items_ozon io
-on io.itemid = m.itemid_ozon
 where percent is not null and percent > 0
 order by l.itemid
     """)
-
     list_trainers = cur.fetchall()
     ids = list(map(lambda x: x[0], list_trainers))
     print(ids)
@@ -43,7 +36,7 @@ order by l.itemid
         formatted_query = f"SELECT itemid, size, wave_id FROM main.prices_lamoda WHERE itemid IN ({','.join(questionmarks)})"
         sizes = cur.execute(formatted_query, ids).fetchall()
         df_items = pd.DataFrame(data=list_trainers, columns = ['itemid', 'name', 'prev_price', 'curr_price', 'prev_date', 'curr_date',
-               'link', 'img', 'rating', 'review_count', 'ozon_price', 'ozon_link', 'wave_id'])
+               'link', 'img', 'rating', 'review_count',  'wave_id'])
 
         wave_id = read_wave_id() - 1
         df_items = df_items[df_items['wave_id'] == wave_id]
