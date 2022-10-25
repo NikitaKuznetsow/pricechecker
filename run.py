@@ -6,7 +6,7 @@ import telebot
 from db.get_items import get_actual_info
 from db.update_bd import update_lamoda_prices
 ids = [464137258]
-TOKEN='5666868204:AAEUxPtF2tQeZ17-ueyR_9JZlrSQCe_k86k'
+TOKEN='___'
 bot = telebot.TeleBot(TOKEN)
 
 
